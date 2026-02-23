@@ -1,0 +1,17 @@
+# Ignore artifacts:
+node_modules/
+build/
+dist/
+coverage/
+
+# Ignore all dot files:
+.*
+
+# Ignore all HTML files:
+**/*.html
+
+# Ignore all documentation files:
+**/*.md
+
+# Ignore all log files:
+*.log

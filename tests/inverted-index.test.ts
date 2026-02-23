@@ -1,8 +1,5 @@
-
-describe("Some TestSuite", () => {
-
-    it("some test...", () => {
+describe('Some TestSuite', () => {
+    it('some test...', () => {
         // TODO: impl later...
-    });
-
-});
+    })
+})

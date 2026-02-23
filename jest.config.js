@@ -10,4 +10,4 @@ module.exports = {
         '^@src/(.*)$': '<rootDir>/src/$1',
     },
     setupFilesAfterEnv: ['tsconfig-paths/register'],
-};
+}
