@@ -24,4 +24,12 @@ describe('Inverted Index TestSuite', () => {
         expect(actualResults).toStrictEqual([2, 23, 52]);
     })
 
+    it('should perform an OR query', () => {
+        const query = new Query('word1')
+            .or('word2');
+        const index = new InvertedIndex(preprocessed);
+        const actualResults = index.search(query);
+        expect(actualResults).toStrictEqual([1, 2, 3, 5, 23, 52, 89, 231]);
+    })
+
 })

@@ -27,6 +27,9 @@ export class InvertedIndex {
             if (operator === EOperators.AND) {
                 results = intersect(results, postings);
             }
+            if (operator === EOperators.OR) {
+                results = union(results, postings);
+            }
             else {
                 throw new Error("Unexpected Operator");
             }
@@ -37,11 +40,11 @@ export class InvertedIndex {
 }
 
 function intersect(setA: number[], setB: number[]) : number[] {
-    const intersect = [];
+    const set: number[] = [];
     let i = 0, j = 0;
     while (i < setA.length && j < setB.length) {
         if (setA[i] === setB[j]) {
-            intersect.push(setA[i]);
+            set.push(setA[i]);
         }
         
         if (setA[i] <= setB[j]) {
@@ -51,5 +54,35 @@ function intersect(setA: number[], setB: number[]) : number[] {
             j++;
         }
     }
-    return intersect;
+    return set;
+}
+
+function union(setA: number[], setB: number[]) : number[] {
+    const set: number[] = [];
+    let i = 0, j = 0;
+    while (i < setA.length && j < setB.length) {
+        if(setA[i] < setB[j]) {
+            set.push(setA[i]);
+        }
+        else if(setB[j] < setA[i]) {
+            set.push(setB[j]);
+        }
+
+        if (setA[i] <= setB[j]) {
+            i++;
+        }
+        else {
+            j++;
+        }
+    }
+
+    if (i >= setA.length) {
+        return set.concat(setB.slice(j));
+    }
+
+    if (j >= setB.length) {
+        return set.concat(setA.slice(i));
+    }
+
+    return set;
 }
