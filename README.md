@@ -13,26 +13,21 @@
 </p>
 
 # Naive Inverted Index
-
-This repository contains an implementation of a Boolean Incidence Matrix.
+This repository contains an implementation of an Inverted Index. This repository 
+does not implement any preprocessing.
 
 # Prerequisites
 This project requires the following:
-* Node Version Manager (NVM)
+* Fast Node Manager (FNM)
 * NodeJS
 * NPM
 
 # Installation
-Follow the instructions [here](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating) to install NVM.
+Follow the instructions [here](https://github.com/Schniz/fnm?tab=readme-ov-file#installation) to install FNM.
 
-Install the latest version specified in the `.npmrc` file:
+Install the latest version specified in the `.node-version` file:
 ```bash
-nvm install --lts=Krypton
-```
-
-Run the following command to install the exact NodeJS version:
-```bash
-nvm use
+fnm use 24.14.0
 ```
 
 # Build
