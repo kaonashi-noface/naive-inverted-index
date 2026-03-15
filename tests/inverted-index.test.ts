@@ -1,4 +1,5 @@
 import { InvertedIndex } from '@src/inverted-index';
+import { Query } from '@src/query';
 
 describe('Inverted Index TestSuite', () => {
 
@@ -10,8 +11,9 @@ describe('Inverted Index TestSuite', () => {
     ]);
 
     it('should query for single word', () => {
+        const query = new Query('word3');
         const index = new InvertedIndex(preprocessed);
-        const actualResults = index.query('word3');
+        const actualResults = index.search(query);
         expect(actualResults).toStrictEqual([2, 5, 23, 52]);
     })
 
