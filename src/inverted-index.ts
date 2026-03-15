@@ -1,4 +1,4 @@
-import { Query } from './query';
+import { Query, EOperators } from './query';
 
 export class InvertedIndex {
 
@@ -17,8 +17,39 @@ export class InvertedIndex {
         if(query.terms.length === 1 && !this.dictionary.has(term)) {
             return [];
         }
-        const postings: number[] = this.dictionary.get(term)!;
-        return postings;
+
+        let results: number[] = this.dictionary.get(term)!;
+        while(query.operator.length > 0) {
+            const operator = query.operator.shift()!;
+            const term = query.terms.shift()!;
+            const postings = this.dictionary.get(term)!;
+
+            if (operator === EOperators.AND) {
+                results = intersect(results, postings);
+            }
+            else {
+                throw new Error("Unexpected Operator");
+            }
+        }
+        return results;
     }
 
+}
+
+function intersect(setA: number[], setB: number[]) : number[] {
+    const intersect = [];
+    let i = 0, j = 0;
+    while (i < setA.length && j < setB.length) {
+        if (setA[i] === setB[j]) {
+            intersect.push(setA[i]);
+        }
+        
+        if (setA[i] <= setB[j]) {
+            i++;
+        }
+        else {
+            j++;
+        }
+    }
+    return intersect;
 }

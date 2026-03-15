@@ -11,10 +11,17 @@ describe('Inverted Index TestSuite', () => {
     ]);
 
     it('should query for single word', () => {
-        const query = new Query('word3');
+        const index = new InvertedIndex(preprocessed);
+        const actualResults = index.search(new Query('word3'));
+        expect(actualResults).toStrictEqual([2, 5, 23, 52]);
+    })
+
+    it('should perform an AND query', () => {
+        const query = new Query('word2')
+            .and('word3');
         const index = new InvertedIndex(preprocessed);
         const actualResults = index.search(query);
-        expect(actualResults).toStrictEqual([2, 5, 23, 52]);
+        expect(actualResults).toStrictEqual([2, 23, 52]);
     })
 
 })
