@@ -1,4 +1,4 @@
-import { type Config } from 'prettier'
+import { type Config } from 'prettier';
 
 const config: Config = {
     /* Spacings */
@@ -10,10 +10,10 @@ const config: Config = {
     printWidth: 80,
     /* Punctuations */
     singleQuote: true,
-    semi: false,
+    semi: true,
     trailingComma: 'all',
     /* Miscellaneous */
     arrowParens: 'always',
-}
+};
 
-export default config
+export default config;
