@@ -27,7 +27,7 @@ export class InvertedIndex {
             if (operator === EOperators.AND) {
                 results = intersect(results, postings);
             }
-            if (operator === EOperators.OR) {
+            else if (operator === EOperators.OR) {
                 results = union(results, postings);
             }
             else {
