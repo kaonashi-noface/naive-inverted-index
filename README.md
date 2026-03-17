@@ -18,16 +18,16 @@ does not implement any preprocessing.
 
 # Prerequisites
 This project requires the following:
-* Fast Node Manager (FNM)
+* Mise En Place (mise)
 * NodeJS
 * NPM
 
 # Installation
-Follow the instructions [here](https://github.com/Schniz/fnm?tab=readme-ov-file#installation) to install FNM.
+Follow the instructions [here](https://mise.jdx.dev/installing-mise.html) to install mise.
 
-Install the latest version specified in the `.node-version` file:
+Install the latest, stable version of node 24 specified in the `mise.toml` file:
 ```bash
-fnm use 24.14.0
+mise install
 ```
 
 # Build
