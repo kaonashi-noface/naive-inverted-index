@@ -13,8 +13,11 @@
 </p>
 
 # Naive Inverted Index
-This repository contains an implementation of an Inverted Index. This repository 
-does not implement any preprocessing.
+This repository covers the following topics from Chapter 2 of "Introduction to Information Retrieval":
+* naive implementation of an Inverted Index
+* naive skip list
+
+This repository does not implement any preprocessing.
 
 # Prerequisites
 This project requires the following:
