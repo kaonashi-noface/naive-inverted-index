@@ -1,12 +1,18 @@
 import { Query, EOperators } from './query';
-// TODO: replace number[] postings with SkipList type
-// import { SkipList } from "./skip-list";
+import { SkipList, getSkipPointers } from './skip-list';
 
 export class InvertedIndex {
-    dictionary: Map<string, number[]>;
+    dictionary: Map<string, SkipList>;
 
     constructor(dictionary: Map<string, number[]>) {
-        this.dictionary = dictionary;
+        this.dictionary = new Map<string, SkipList>();
+        for (const [term, postings] of dictionary.entries()) {
+            const skipList: SkipList = {
+                postings,
+                skipPtrs: getSkipPointers(postings),
+            };
+            this.dictionary.set(term, skipList);
+        }
     }
 
     search(query: Query): number[] {
@@ -19,11 +25,11 @@ export class InvertedIndex {
             return [];
         }
 
-        let results: number[] = this.dictionary.get(term)!;
+        let results: number[] = this.dictionary.get(term)!.postings;
         while (query.operator.length > 0) {
             const operator = query.operator.shift()!;
             const term = query.terms.shift()!;
-            const postings = this.dictionary.get(term)!;
+            const postings = this.dictionary.get(term)!.postings;
 
             if (operator === EOperators.AND) {
                 results = intersect(results, postings);
