@@ -30,13 +30,8 @@ export class InvertedIndex {
             const operator = query.operator.shift()!;
             const term = query.terms.shift()!;
             if (operator === EOperators.AND) {
-                const postingsA = results.postings;
-                const postingsB = this.dictionary.get(term)!.postings;
-                const postings = intersect(postingsA, postingsB);
-                results = {
-                    postings,
-                    skipPtrs: getSkipPointers(postings),
-                };
+                const postings = this.dictionary.get(term)!;
+                results = intersect(results, postings);
             } else if (operator === EOperators.OR) {
                 const postingsA = results.postings;
                 const postingsB = this.dictionary.get(term)!.postings;
@@ -53,22 +48,28 @@ export class InvertedIndex {
     }
 }
 
-function intersect(setA: number[], setB: number[]): number[] {
+function intersect(setA: SkipList, setB: SkipList): SkipList {
+    // TODO: implement skip pointer fast forwarding/ jumping
     const set: number[] = [];
     let i = 0,
         j = 0;
-    while (i < setA.length && j < setB.length) {
-        if (setA[i] === setB[j]) {
-            set.push(setA[i]);
+    const postingsA = setA.postings;
+    const postingsB = setB.postings;
+    while (i < postingsA.length && j < postingsB.length) {
+        if (postingsA[i] === postingsB[j]) {
+            set.push(postingsA[i]);
         }
 
-        if (setA[i] <= setB[j]) {
+        if (postingsA[i] <= postingsB[j]) {
             i++;
         } else {
             j++;
         }
     }
-    return set;
+    return {
+        postings: set,
+        skipPtrs: getSkipPointers(set),
+    };
 }
 
 function union(setA: number[], setB: number[]): number[] {
