@@ -25,21 +25,31 @@ export class InvertedIndex {
             return [];
         }
 
-        let results: number[] = this.dictionary.get(term)!.postings;
+        let results: SkipList = this.dictionary.get(term)!;
         while (query.operator.length > 0) {
             const operator = query.operator.shift()!;
             const term = query.terms.shift()!;
-            const postings = this.dictionary.get(term)!.postings;
-
             if (operator === EOperators.AND) {
-                results = intersect(results, postings);
+                const postingsA = results.postings;
+                const postingsB = this.dictionary.get(term)!.postings;
+                const postings = intersect(postingsA, postingsB);
+                results = {
+                    postings,
+                    skipPtrs: getSkipPointers(postings),
+                };
             } else if (operator === EOperators.OR) {
-                results = union(results, postings);
+                const postingsA = results.postings;
+                const postingsB = this.dictionary.get(term)!.postings;
+                const postings = union(postingsA, postingsB);
+                results = {
+                    postings,
+                    skipPtrs: getSkipPointers(postings),
+                };
             } else {
                 throw new Error('Unexpected Operator');
             }
         }
-        return results;
+        return results.postings;
     }
 }
 
