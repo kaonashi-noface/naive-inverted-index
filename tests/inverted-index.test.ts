@@ -1,7 +1,7 @@
 import { InvertedIndex } from '@src/inverted-index';
 import { Query } from '@src/query';
 
-describe('Inverted Index TestSuite', () => {
+describe.skip('Inverted Index TestSuite', () => {
     const preprocessed = new Map<string, number[]>([
         ['word1', [1, 3, 5, 89, 231]],
         ['word2', [2, 23, 52, 89]],

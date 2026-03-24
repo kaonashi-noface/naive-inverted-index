@@ -1,16 +1,19 @@
-export class SkipList {
-    postings: number[];
-    skipIdx: number[];
 
-    constructor(postings: number[]) {
-        this.postings = postings;
-        // NOTE: use integer sqrt in serious/ final impl of search engine (e.g. rust or golang):
-        const skipLength = Math.sqrt(this.postings.length);
-        const numSkips = Math.ceil(this.postings.length / skipLength);
-        this.skipIdx = [...Array(numSkips).keys()].map(
-            (i) => skipLength * (i + 1),
-        );
+export type SkipList = {
+    postings: number[],
+    skipPtrs: number[],
+};
 
-        // TODO: integrate skip lists into inverted index & refactor unit tests
+export function getSkipPointers(postings: number[]) : number[] {
+    const skipLength = Math.ceil(Math.sqrt(postings.length));
+    const skipPtrs: number[] = getMultiples(postings.length, skipLength);
+    return skipPtrs;
+}
+
+function getMultiples(n: number, k: number) : number[] {
+    const multiples: number[] = [];
+    for (let i=k; i<n; i+=k) {
+        multiples.push(i);
     }
+    return multiples;
 }

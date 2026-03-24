@@ -1,4 +1,6 @@
 import { Query, EOperators } from './query';
+// TODO: replace number[] postings with SkipList type
+// import { SkipList } from "./skip-list";
 
 export class InvertedIndex {
     dictionary: Map<string, number[]>;
